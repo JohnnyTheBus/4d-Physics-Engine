@@ -34,6 +34,6 @@ class _object_engine:
         canvas.app.run()
 
 
-if __name__ == "__main__" and sys.flags.interactive == 0:
+if __name__ == '__main__' and sys.flags.interactive == 0:
     canvas = _object_engine('Object Example', "cube", [1, 1, 1], "yellow", "black")
     canvas._create_scene()
