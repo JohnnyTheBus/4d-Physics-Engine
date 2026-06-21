@@ -15,7 +15,7 @@ try:
     print(f"GPU: {name}")
 except:
     GPU_AVAILABLE = False
-    print(f"GPU is not available ({e}). Using CPU instead.")
+    print(f"GPU is not available. Using CPU instead.") # removed error e, need to add specifc error execptions
 
 class Simulation:
     def __init__(self, use_gpu=True) -> None: # We will need to pass all our variables to our simulation generator here.
