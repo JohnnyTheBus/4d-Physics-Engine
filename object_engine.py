@@ -1,39 +1,34 @@
-import vispy
-from vispy import app
-vispy.use("PyQt6")
-import sys
 from vispy import scene
-from vispy.scene import SceneCanvas
-from vispy.scene.visuals import Polygon, Ellipse, Rectangle, RegularPolygon
-from vispy.color import Color
+from vispy.app import Timer
 
-class _object_engine:
-    def __init__(self, scene_title: str, object: str, dimensions: list[float], color: str, edge_color: str) -> None:
-        self.scene_title=scene_title
-        self.object=object
-        self.dimensions=dimensions
-        self.color=Color(color)
-        self.edge_color=Color(edge_color)
+#our classes
+from shapes.Shape import Glome, Tesseract
 
-    def _create_cube(self, view):
-        cube = scene.visuals.Box(self.dimensions[0], self.dimensions[1], self.dimensions[2], color=self.color, edge_color=self.edge_color, parent=view.scene)
-        return cube
 
-    def _create_scene(self):
-        canvas = SceneCanvas(keys='interactive', title=self.scene_title, show=True)
+class ObjectEngine:
+    #Owns a vispy scene and animates a collection of shapes.
+
+    def __init__(self, title, shapes):
+        self.title = title
+        self.shapes = shapes
+
+    def _tick(self, _event):
+        for shape in self.shapes:
+            shape.update()
+
+    def run(self):
+        canvas = scene.SceneCanvas(keys="interactive", title=self.title, show=True)
         view = canvas.central_widget.add_view()
-        view.bgcolor = 'black'
-        view.camera = 'turntable'
+        view.bgcolor = "black"
+        view.camera = "turntable" #this has to be, but idk why
         view.padding = 100
 
-        color = Color("yellow")
+        for shape in self.shapes:
+            shape.attach(view)
 
-        if self.object == "cube":
-            object = self._create_cube(view)
-
+        timer = Timer(interval=1 / 60, connect=self._tick, start=True)
         canvas.app.run()
+        return timer  #frankinstien the ref
 
-
-if __name__ == "__main__" and sys.flags.interactive == 0:
-    canvas = _object_engine('Object Example', "cube", [1, 1, 1], "yellow", "black")
-    canvas._create_scene()
+#main, start point here
+ObjectEngine("Glome + Tesseract", [Glome(color="cyan", offset=(-1.5, 0, 0)),Tesseract(color="magenta", offset=(1.5, 0, 0)), ]).run()
