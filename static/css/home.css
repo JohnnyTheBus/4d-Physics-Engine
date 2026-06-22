@@ -1,0 +1,32 @@
+.topnav {
+    display: flex;
+    align-items: center;
+    background-color: var(--nav-bg);
+    color: #f0f0f0;
+    text-decoration: none;
+    padding: 0 16px;
+    margin-top: 8px;
+}
+
+.topnav a {
+    display: block;
+    color: #f0f0f0;
+    text-decoration: none;
+    padding: 14px 16px;
+    font-size: 16px;
+}
+
+.topnav a:hover {
+    background-color: var(--nav-hover);
+    border-radius: 4px;
+}
+
+.topnav-right {
+    margin-left: auto;
+}
+
+.topnav-right-group {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
