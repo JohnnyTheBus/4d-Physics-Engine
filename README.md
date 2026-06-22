@@ -8,14 +8,19 @@
    cd 4d-Physics-Engine
 ```
 
-2. **Create and activate virtual environment**
+2. **Install npm dependencies**
+```bash
+   npm install
+```
+
+3. **Create and activate virtual environment**
 ```bash
    python -m venv venv
    venv\Scripts\activate # For Windows systems
    source venv/bin/activate # For Linux/MacOS systems
 ```
 
-3. **Install dependencies**
+4. **Install dependencies**
 ```bash
    pip install -r requirements.txt
 ```

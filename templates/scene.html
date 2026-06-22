@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Scene{% endblock %}
+
+{% block content %}
+<canvas id="scene-canvas" style="display:block;width:100vw;height:100vh;"></canvas>
+
+<script type="importmap">
+{
+    "imports": {
+        "three": "{{ url_for('static', filename='js/three/three.module.js') }}"
+    }
+}
+</script>
+
+<script type="module" src="{{ url_for('static', filename='js/scene.js') }}"></script>
+{% endblock %}
