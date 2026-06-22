@@ -1,7 +1,59 @@
 {% extends "base.html" %}
 
-{% block title %}{{ _('Settings') }}{% endblock %}
+{% block title %}Settings{% endblock %}
 
 {% block content %}
+<div class="settings-page">
+    <h2>Settings</h2>
 
+    <section class="settings-section">
+        <h3>Theme</h3>
+        <div class="theme-grid" id="theme-grid">
+            {% set themes = [
+                ('light',         'Light'),
+                ('sepia',         'Sepia'),
+                ('dusk',          'Dusk'),
+                ('twilight',      'Twilight'),
+                ('dark',          'Dark'),
+                ('high-contrast', 'High Contrast'),
+                ('dracula',       'Dracula'),
+                ('catppuccin',    'Catppuccin')
+            ] %}
+            {% for value, label in themes %}
+            <button class="theme-card" data-theme-value="{{ value }}" aria-label="Select {{ label }} theme">
+                <div class="theme-preview" data-theme="{{ value }}">
+                    <div class="preview-nav"></div>
+                    <div class="preview-body">
+                        <div class="preview-row preview-header"></div>
+                        <div class="preview-row preview-even"></div>
+                        <div class="preview-row preview-odd"></div>
+                    </div>
+                </div>
+                <span class="theme-label">{{ label }}</span>
+            </button>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+<script>
+    (function () {
+        var current = localStorage.getItem('theme') || 'dark';
+
+        function applyTheme(name) {
+            document.documentElement.setAttribute('data-theme', name);
+            localStorage.setItem('theme', name);
+            document.querySelectorAll('.theme-card').forEach(function (btn) {
+                btn.classList.toggle('active', btn.dataset.themeValue === name);
+            });
+        }
+
+        applyTheme(current);
+
+        document.getElementById('theme-grid').addEventListener('click', function (e) {
+            var card = e.target.closest('.theme-card');
+            if (card) applyTheme(card.dataset.themeValue);
+        });
+    })();
+</script>
 {% endblock %}

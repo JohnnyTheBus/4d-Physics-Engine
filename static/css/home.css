@@ -30,3 +30,207 @@
     display: flex;
     align-items: center;
 }
+
+/* ── Theme Variables ── */
+[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --nav-bg: #2c2c2c;
+    --nav-hover: #3a3a3a;
+    --table-header-bg: #F57E1F;
+    --table-row-even: #cccccc;
+    --table-row-odd: #ffffff;
+    --input-border: #cccccc;
+    --button-bg: #2EABDA;
+}
+
+[data-theme="sepia"] {
+    color-scheme: light;
+    --bg-color: #f4efe6;
+    --text-color: #4a3728;
+    --nav-bg: #2c2c2c;
+    --nav-hover: #3a3a3a;
+    --table-header-bg: #c47820;
+    --table-row-even: #e8e0d4;
+    --table-row-odd: #f4efe6;
+    --input-border: #c8b89a;
+    --button-bg: #2EABDA;
+}
+
+[data-theme="dusk"] {
+    color-scheme: dark;
+    --bg-color: #2a2015;
+    --text-color: #e8d8b8;
+    --nav-bg: #1e1810;
+    --nav-hover: #3a2e1e;
+    --table-header-bg: #a86010;
+    --table-row-even: #352a1a;
+    --table-row-odd: #2a2015;
+    --input-border: #5a4a30;
+    --button-bg: #1a7fa3;
+}
+
+[data-theme="twilight"] {
+    color-scheme: dark;
+    --bg-color: #1e2433;
+    --text-color: #c8cdd8;
+    --nav-bg: #151b27;
+    --nav-hover: #2a3349;
+    --table-header-bg: #9a5510;
+    --table-row-even: #262e40;
+    --table-row-odd: #1e2433;
+    --input-border: #3a4258;
+    --button-bg: #1a7fa3;
+}
+
+[data-theme="high-contrast"] {
+    color-scheme: dark;
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --nav-bg: #000000;
+    --nav-hover: #333333;
+    --table-header-bg: #ffff00;
+    --table-row-even: #1a1a1a;
+    --table-row-odd: #000000;
+    --input-border: #ffffff;
+    --button-bg: #ffff00;
+}
+
+[data-theme="dracula"] {
+    color-scheme: dark;
+    --bg-color: #282a36;
+    --text-color: #f8f8f2;
+    --nav-bg: #21222c;
+    --nav-hover: #44475a;
+    --table-header-bg: #6272a4;
+    --table-row-even: #44475a;
+    --table-row-odd: #282a36;
+    --input-border: #44475a;
+    --button-bg: #bd93f9;
+}
+
+[data-theme="catppuccin"] {
+    color-scheme: dark;
+    --bg-color: #1e1e2e;
+    --text-color: #cdd6f4;
+    --nav-bg: #181825;
+    --nav-hover: #313244;
+    --table-header-bg: #cba6f7;
+    --table-row-even: #313244;
+    --table-row-odd: #1e1e2e;
+    --input-border: #45475a;
+    --button-bg: #89b4fa;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --bg-color: #1e1e1e;
+    --text-color: #f0f0f0;
+    --nav-bg: #2c2c2c;
+    --nav-hover: #3a3a3a;
+    --table-header-bg: #c4660f;
+    --table-row-even: #2a2a2a;
+    --table-row-odd: #242424;
+    --input-border: #555555;
+    --button-bg: #1a7fa3;
+}
+
+/* ── Settings Page ── */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.settings-page {
+    padding: 24px 32px;
+}
+
+.settings-page h2 {
+    margin: 0 0 24px;
+    font-size: 1.5rem;
+}
+
+.settings-section h3 {
+    margin: 0 0 16px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+}
+
+.theme-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.theme-card {
+    background: none;
+    border: 2px solid var(--input-border);
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.15s;
+    width: 120px;
+}
+
+.theme-card:hover {
+    border-color: var(--button-bg);
+}
+
+.theme-card.active {
+    border-color: var(--button-bg);
+    box-shadow: 0 0 0 2px var(--button-bg);
+}
+
+.theme-label {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+/* Mini preview swatch */
+.theme-preview {
+    width: 100px;
+    height: 64px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.preview-nav {
+    height: 14px;
+    background-color: var(--nav-bg);
+    flex-shrink: 0;
+}
+
+.preview-body {
+    flex: 1;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-row {
+    flex: 1;
+}
+
+.preview-header {
+    background-color: var(--table-header-bg);
+}
+
+.preview-even {
+    background-color: var(--table-row-even);
+}
+
+.preview-odd {
+    background-color: var(--table-row-odd);
+}
