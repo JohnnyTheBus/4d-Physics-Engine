@@ -25,7 +25,8 @@
                  hx-swap="outerHTML show:window:top"
                  hx-push-url="true">
                 <a href="{{ url_for('core.homepage') }}">Home</a>
-                <div class="top-right-group">
+                <a href="{{ url_for('scene.scene') }}" hx-boost="false">Scene</a>
+                <div class="topnav-right-group">
                     <a href="{{ url_for('core.settings') }}">Settings</a>
                 </div>
             </div>

@@ -219,3 +219,7 @@ __marimo__/
 
 # Local setup scripts
 setup_scripts/
+
+# Node / npm
+node_modules/
+package-lock.json
