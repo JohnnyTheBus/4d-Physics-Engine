@@ -3,7 +3,19 @@
 {% block title %}Scene{% endblock %}
 
 {% block content %}
-<canvas id="scene-canvas" style="display:block;width:100vw;height:100vh;"></canvas>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/scene.css') }}">
+
+
+<div class="scene-layout">
+    <aside class="scene-sidenav" id="sceneSidenav">
+        <span class="sidenav-section-label">Add Object</span>
+        <button class="sidenav-object-btn" data-type="cube" draggable="true">Cube</button>
+        <button class="sidenav-object-btn" data-type="Sphere" draggable="true">Sphere</button>
+    </aside>
+
+    <canvas id="scene-canvas" style="display:block;flex:1;height:100%"></canvas>
+</div>
+
 
 <script type="importmap">
 {

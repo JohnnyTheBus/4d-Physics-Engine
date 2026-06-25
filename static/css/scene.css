@@ -1,0 +1,33 @@
+.scene-layout {
+    display: flex;
+    height: calc(100vh - 46px);
+}
+
+.scene-sidenav {
+    width: 220px;
+    flex-shrink: 0;
+    background-color: var(--nav-bg);
+    border-right: 1px solid var(--input-border);
+    padding: 16px 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-object-btn {
+    background: var(--nav-hover);
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    color: var(--text-color);
+    padding: 10px 12px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.sidenav-object-btn:hover {
+    background: var(--button-bg);
+    border-color: var(--button-bg);
+}
