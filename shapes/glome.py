@@ -12,6 +12,8 @@ vispy.use("PyQt6")
 from vispy import scene
 from vispy.app import Timer
 
+speed = 0.003
+movement = [1,0,0,1]
 
 #Geometry in 4d
 def glome(n_psi=8, n_theta=8, n_phi=8): # each arg being the number of samples we are taking
@@ -52,6 +54,11 @@ def rotation_4d(plane, angle):
     return matrix
 
 
+#Translation in 4d. Moving is just adding an offset, NOT a matrix multiply (that's rotation).
+def move_4d(position, direction, speed):
+    return position + np.asarray(direction, dtype=np.float32) * speed
+
+
 #Perspective projection 4d to 3d
 def project_to_3d(verts4, distance=3.0):
     factor = distance / (distance - verts4[:, 3:4])  # shape (N, 1),broadcasts over xyz
@@ -69,13 +76,15 @@ def main():
 
     line = scene.visuals.Line(connect=edges, color="cyan", width=1, parent=view.scene)
 
-    state = {"angle": 0.0}
+    state = {"angle": 0.0, "position": np.zeros(4, dtype=np.float32)}
 
     def on_timer(_event):
         state["angle"] += 0.01
         # Rotate in two w-planes so the surface turns "inside-out" through 4D. harvested from tesseract
         rotation = rotation_4d((0, 3), state["angle"]) @ rotation_4d((2, 3), state["angle"] * 0.7)
-        line.set_data(pos=project_to_3d(verts4 @ rotation.T))
+        state["position"] = move_4d(state["position"], movement, speed)
+        # rotate first, then translate (add), then project
+        line.set_data(pos=project_to_3d(verts4 @ rotation.T + state["position"]))
 
     timer = Timer(interval=1 / 60, connect=on_timer, start=True)
     vispy.app.run()
