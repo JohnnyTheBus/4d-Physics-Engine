@@ -31,4 +31,4 @@ class ObjectEngine:
         return timer  #frankinstien the ref
 
 #main, start point here
-ObjectEngine("Glome + Tesseract", [Glome(color="cyan", offset=(-1.5, 0, 0), velocity=(1, 0, 0, 1), speed=0.001),Tesseract(color="magenta", offset=(1.5, 0, 0)), ]).run()
+ObjectEngine("Tesseract + Tesseract", [Tesseract(color="green", offset=(-1.5, 2, 0), velocity=(1, 0, 0, 1), speed=0.001),Tesseract(color="greens", offset=(1.5, 2, 0), velocity=(1, 0, 0, 1), speed=0.001), ]).run()

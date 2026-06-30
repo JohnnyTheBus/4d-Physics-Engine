@@ -12,6 +12,9 @@ vispy.use("PyQt6")
 from vispy import scene
 from vispy.app import Timer
 
+speed = 0.001
+movement = [0,0,0,0]
+rotation_speed = 0.001
 
 #Geometry in 4d
 def tesseract():
@@ -32,12 +35,16 @@ def rotation_4d(plane, angle):
     matrix[axis_b, axis_a], matrix[axis_b, axis_b] = sin_angle, cos_angle
     return matrix
 
+#Translation in 4d. Moving is just adding an offset
+def move_4d(position, direction, speed):
+    return position + np.asarray(direction, dtype=np.float32) * speed
 
 # Perspective projection 4d to 3d
 def project_to_3d(verts4, distance=3.0):
     """Push points "toward" the 4D viewer: larger w => bigger. distance=inf is orthographic."""
     factor = distance / (distance - verts4[:, 3:4])  # shape (N, 1), broadcasts over xyz
     return verts4[:, :3] * factor
+
 
 
 # Render
@@ -51,13 +58,14 @@ def main():
 
     line = scene.visuals.Line(connect=edges, color="cyan", width=2, parent=view.scene)
 
-    state = {"angle": 0.0} 
+    state = {"angle": 0.0, "position": np.zeros(4, dtype=np.float32)}
 
     def on_timer(_event):
-        state["angle"] += 0.01
+        state["angle"] += rotation_speed
         # Rotate in two w-planes so the surface turns "inside-out" through 4D.
-        rotation = rotation_4d((0, 3), state["angle"]) @ rotation_4d((2, 3), state["angle"] * 0.7)
-        line.set_data(pos=project_to_3d(verts4 @ rotation.T))
+        rotation = rotation_4d((0, 3), state["angle"]) @ rotation_4d((2, 3), state["angle"])
+        state["position"] = move_4d(state["position"], movement, speed)
+        line.set_data(pos=project_to_3d(verts4 @ rotation.T + state["position"]))
 
     timer = Timer(interval=1 / 60, connect=on_timer, start=True)
     vispy.app.run()

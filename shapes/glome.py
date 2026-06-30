@@ -14,6 +14,7 @@ from vispy.app import Timer
 
 speed = 0.003
 movement = [1,0,0,1]
+rotation_speed = 0.0000001
 
 #Geometry in 4d
 def glome(n_psi=8, n_theta=8, n_phi=8): # each arg being the number of samples we are taking
@@ -54,7 +55,7 @@ def rotation_4d(plane, angle):
     return matrix
 
 
-#Translation in 4d. Moving is just adding an offset, NOT a matrix multiply (that's rotation).
+#Translation in 4d. Moving is just adding an offset
 def move_4d(position, direction, speed):
     return position + np.asarray(direction, dtype=np.float32) * speed
 
@@ -79,9 +80,9 @@ def main():
     state = {"angle": 0.0, "position": np.zeros(4, dtype=np.float32)}
 
     def on_timer(_event):
-        state["angle"] += 0.01
+        state["angle"] += rotation_speed
         # Rotate in two w-planes so the surface turns "inside-out" through 4D. harvested from tesseract
-        rotation = rotation_4d((0, 3), state["angle"]) @ rotation_4d((2, 3), state["angle"] * 0.7)
+        rotation = rotation_4d((0, 3), state["angle"]) @ rotation_4d((2, 3), state["angle"])
         state["position"] = move_4d(state["position"], movement, speed)
         # rotate first, then translate (add), then project
         line.set_data(pos=project_to_3d(verts4 @ rotation.T + state["position"]))
